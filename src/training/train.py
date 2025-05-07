@@ -32,13 +32,10 @@ def train_model():
     )
     
     with mlflow.start_run():
-        # Train model
-        model = RandomForestClassifier(
-            n_estimators=100,
-            max_depth=5,
-            random_state=Config.RANDOM_STATE,
-            class_weight='balanced'
-        )
+        mlflow.log_params(Config.MODEL_PARAMS)
+        mlflow.log_param("model_class", Config.MODEL_CLASS)
+        
+        model = eval(Config.MODEL_CLASS)(**Config.MODEL_PARAMS)
         model.fit(X_train, y_train)
         
         # Evaluate
