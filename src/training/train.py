@@ -8,12 +8,12 @@ from sklearn.metrics import (
 )
 import joblib
 from pathlib import Path
-from ..config import Config
-from ..data_processing.preprocess import load_data, preprocess_and_save_data
+from src.config import Config
+from src.data_processing.preprocess import load_data, preprocess_and_save_data
 
 def train_model():
     """Train and evaluate model with MLflow tracking"""
-    Config.ensure_directories_exist()
+    Config.ensure_dirs_exist()
     
     # Set up MLflow
     mlflow.set_tracking_uri(Config.MLFLOW_TRACKING_URI)
@@ -31,11 +31,11 @@ def train_model():
         stratify=y
     )
     
-    with mlflow.start_run():
+    with mlflow.start_run() as run:
+        print(f"Run ID: {run.info.run_id}")
         mlflow.log_params(Config.MODEL_PARAMS)
-        mlflow.log_param("model_class", Config.MODEL_CLASS)
         
-        model = eval(Config.MODEL_CLASS)(**Config.MODEL_PARAMS)
+        model = RandomForestClassifier(**Config.MODEL_PARAMS)
         model.fit(X_train, y_train)
         
         # Evaluate
@@ -65,3 +65,9 @@ def train_model():
         print(f"Model trained and saved. ROC AUC: {metrics['roc_auc']:.4f}")
         
     return model, metrics
+
+
+if __name__ == "__main__":
+    model, metrics = train_model()
+    print("Training completed!")
+    print(f"Model accuracy: {metrics['accuracy']:.2f}")

@@ -28,3 +28,7 @@ pyyaml==6.0  # For config files
 
 # Production
 gunicorn==20.1.0  # WSGI server for production
+
+
+setuptools==65.5.1  
+wheel==0.38.4

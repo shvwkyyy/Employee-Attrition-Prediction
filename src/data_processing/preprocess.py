@@ -4,14 +4,17 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from pathlib import Path
-from ..config import Config
-from .data_validation import validate_data
+import logging
+from src.config import Config
+from src.data_processing.data_validation import DataValidator  # Updated import
+
+logger = logging.getLogger(__name__)
 
 def load_data(file_path: str = None) -> pd.DataFrame:
     """Load and validate raw data"""
     file_path = file_path or Config.RAW_DATA_PATH
     df = pd.read_csv(file_path)
-    validate_data(df)
+    DataValidator().validate_data(df)  # Updated validation call
     return df
 
 def create_preprocessor():
@@ -44,7 +47,7 @@ def preprocess_and_save_data(df: pd.DataFrame, save: bool = True):
     if save:
         joblib.dump(preprocessor, Config.MODEL_DIR / 'preprocessor.joblib')
         pd.DataFrame(X_processed).to_csv(
-            Config.PROCESSED_DATA_DIR / 'processed_features.csv', index=False)
-        y.to_csv(Config.PROCESSED_DATA_DIR / 'target.csv', index=False)
+            Config.PROCESSED_DIR / 'processed_features.csv', index=False)
+        y.to_csv(Config.PROCESSED_DIR / 'target.csv', index=False)
     
     return X_processed, y, preprocessor

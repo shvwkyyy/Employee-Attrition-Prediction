@@ -1,55 +1,41 @@
-def validate_input(input_data):
-    """Validate input data for prediction"""
-    errors = []
+from pydantic import BaseModel, Field, field_validator, conint, constr
+from typing import Literal, Optional
+
+class EmployeeData(BaseModel):
+    """Enhanced schema with built-in validation"""
+    # Numeric fields with range validation
+    from pydantic import Field  # Add this import at the top if not already present
+
+    age: int = Field(..., ge=18, le=70)
+    daily_rate: int = Field(..., ge=0, le=3000)
+    distance_from_home: int = Field(..., ge=0, le=30)
+    education: int = Field(..., ge=1, le=5)
+    environment_satisfaction: int = Field(..., ge=1, le=4)
+    monthly_income: int = Field(..., ge=0)
     
-    # Required fields
-    required_fields = [
-        'Age', 'BusinessTravel', 'DailyRate', 'Department', 'DistanceFromHome',
-        'Education', 'EducationField', 'EmployeeNumber', 'EnvironmentSatisfaction',
-        'Gender', 'JobRole', 'MaritalStatus', 'MonthlyIncome', 'OverTime'
+    # Categorical fields with enum validation
+    business_travel: Literal['Non-Travel', 'Travel_Rarely', 'Travel_Frequently']
+    department: Literal['Sales', 'Research & Development', 'Human Resources']
+    education_field: Literal[
+        'Life Sciences', 'Medical', 'Marketing', 
+        'Technical Degree', 'Other', 'Human Resources'
     ]
+    gender: Literal['Male', 'Female']
+    marital_status: Literal['Single', 'Married', 'Divorced']
+    over_time: Literal['Yes', 'No']
     
-    for field in required_fields:
-        if field not in input_data:
-            errors.append(f"Missing required field: {field}")
+    # Optional fields (if needed)
+    employee_number: Optional[int] = None
     
-    # Type validation
-    numeric_fields = {
-        'Age': (18, 70),
-        'DailyRate': (0, 3000),
-        'DistanceFromHome': (0, 30),
-        'Education': (1, 5),
-        'EmployeeNumber': (1, None),
-        'EnvironmentSatisfaction': (1, 4),
-        'MonthlyIncome': (0, None)
-    }
-    
-    for field, (min_val, max_val) in numeric_fields.items():
-        if field in input_data:
-            try:
-                value = int(input_data[field])
-                if min_val is not None and value < min_val:
-                    errors.append(f"{field} must be >= {min_val}")
-                if max_val is not None and value > max_val:
-                    errors.append(f"{field} must be <= {max_val}")
-            except ValueError:
-                errors.append(f"{field} must be a number")
-    
-    # Categorical validation
-    valid_categories = {
-        'BusinessTravel': ['Non-Travel', 'Travel_Rarely', 'Travel_Frequently'],
-        'Department': ['Sales', 'Research & Development', 'Human Resources'],
-        'EducationField': [
-            'Life Sciences', 'Medical', 'Marketing', 'Technical Degree',
-            'Other', 'Human Resources'
-        ],
-        'Gender': ['Male', 'Female'],
-        'MaritalStatus': ['Single', 'Married', 'Divorced'],
-        'OverTime': ['Yes', 'No']
-    }
-    
-    for field, valid_values in valid_categories.items():
-        if field in input_data and input_data[field] not in valid_values:
-            errors.append(f"{field} must be one of: {', '.join(valid_values)}")
-    
-    return errors
+    # Custom validation examples
+    @field_validator('monthly_income')
+    def validate_income(cls, v):
+        if v > 1000000:  # Adjust threshold as needed
+            raise ValueError('Unrealistically high monthly income')
+        return v
+
+    @field_validator('education_field')
+    def validate_education_job_alignment(cls, v, values):
+        if 'job_role' in values and v == 'Human Resources' and values['job_role'] != 'HR':
+            raise ValueError('HR education field requires HR job role')
+        return v

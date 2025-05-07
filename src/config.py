@@ -4,16 +4,16 @@ import os
 class Config:
     # Paths
     BASE_DIR = Path(__file__).parent.parent
-    RAW_DATA_PATH = BASE_DIR / "data/raw/attrition_data.csv"
+    RAW_DATA_PATH = BASE_DIR / "data/raw/Employee-Attrition.csv"
     PROCESSED_DIR = BASE_DIR / "data/processed"
     MODEL_DIR = BASE_DIR / "models/production"
     
     # MLflow Settings
+    TRACKING_ENABLED = True
     MLFLOW_TRACKING_URI = "file://" + str(BASE_DIR / "mlruns")
     MLFLOW_EXPERIMENT_NAME = "employee_attrition"
     
     # Model Parameters
-    MODEL_CLASS = "sklearn.ensemble.RandomForestClassifier"
     MODEL_PARAMS = {
         "n_estimators": 100,
         "max_depth": 8,
