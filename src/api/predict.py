@@ -15,13 +15,16 @@ class Predictor:
     def __init__(self):
         self.model = None
         self.preprocessor = None
+        self.pca = None
         self._load_models()
 
     def _load_models(self):
         """Load serialized models from disk"""
         try:
             self.model = joblib.load(Config.MODEL_DIR / 'model' / 'model.pkl')
-            self.preprocessor = joblib.load(Config.MODEL_DIR / 'preprocessor.joblib')
+            processor_dict = joblib.load(Config.MODEL_DIR / 'full_processor.joblib')
+            self.preprocessor = processor_dict['preprocessor']  # Extract the preprocessor
+            self.pca = processor_dict['pca']
             logger.info("Models loaded successfully")
         except Exception as e:
             logger.critical(f"Model loading failed: {str(e)}")
@@ -44,6 +47,7 @@ class Predictor:
             
             # Preprocess and predict
             processed_data = self.preprocessor.transform(input_df)
+            processed_data = self.pca.transform(processed_data)
             prediction = self.model.predict(processed_data)
             probability = self.model.predict_proba(processed_data)[0, 1]
             
@@ -58,9 +62,9 @@ class Predictor:
 
     def _get_confidence_level(self, probability: float) -> str:
         """Convert probability to confidence level"""
-        if probability > 0.7:
+        if probability > 0.6:
             return "high"
-        elif probability > 0.5:
+        elif probability > 0.3:
             return "medium"
         return "low"
 

@@ -11,32 +11,32 @@
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Employee Attrition Prediction</h1>
-        <form id="predictionForm">
+        <form id="PredictionForm">
             <!-- Personal Information -->
             <h3>Personal Information</h3>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="gender">Gender</label>
-                        <select id="gender" class="form-control" required>
+                        <label for="Gender">Gender</label>
+                        <select id="Gender" class="form-control" required>
                             <option value="">Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="age">Age</label>
-                        <input type="number" id="age" class="form-control" min="18" max="65" step="1" required>
+                        <label for="Age">Age</label>
+                        <input type="number" id="Age" class="form-control" min="18" max="65" step="1" required>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="maritalStatus">Marital Status</label>
-                        <select id="maritalStatus" class="form-control" required>
+                        <label for="MaritalStatus">Marital Status</label>
+                        <select id="MaritalStatus" class="form-control" required>
                             <option value="">Select Marital Status</option>
                             <option value="Single">Single</option>
                             <option value="Married">Married</option>
@@ -46,8 +46,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="education">Education</label>
-                        <select id="education" class="form-control" required>
+                        <label for="Education">Education</label>
+                        <select id="Education" class="form-control" required>
                             <option value="">Select Education</option>
                             <option value="Below College">Below College</option>
                             <option value="College">College</option>
@@ -61,8 +61,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="educationField">Education Field</label>
-                        <select id="educationField" class="form-control" required>
+                        <label for="EducationField">Education Field</label>
+                        <select id="EducationField" class="form-control" required>
                             <option value="">Select Education Field</option>
                             <option value="Life Sciences">Life Sciences</option>
                             <option value="Other">Other</option>
@@ -80,8 +80,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="department">Department</label>
-                        <select id="department" class="form-control" required>
+                        <label for="Department">Department</label>
+                        <select id="Department" class="form-control" required>
                             <option value="">Select Department</option>
                             <option value="Sales">Sales</option>
                             <option value="Research & Development">Research & Development</option>
@@ -91,8 +91,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="jobRole">Job Role</label>
-                        <select id="jobRole" class="form-control" required>
+                        <label for="JobRole">Job Role</label>
+                        <select id="JobRole" class="form-control" required>
                             <option value="">Select Job Role</option>
                             <option value="Sales Executive">Sales Executive</option>
                             <option value="Research Scientist">Research Scientist</option>
@@ -110,8 +110,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="jobLevel">Job Level</label>
-                        <select id="jobLevel" class="form-control" required>
+                        <label for="JobLevel">Job Level</label>
+                        <select id="JobLevel" class="form-control" required>
                             <option value="">Select Job Level</option>
                             <option value="junior">Junior</option>
                             <option value="mid_level">Mid Level</option>
@@ -123,36 +123,36 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="totalWorkingYears">Total Working Years</label>
-                        <input type="number" id="totalWorkingYears" class="form-control" min="0" max="40" step="1" required>
+                        <label for="TotalWorkingYears">Total Working Years</label>
+                        <input type="number" id="TotalWorkingYears" class="form-control" min="0" max="40" step="1" required>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="yearsAtCompany">Years at Company</label>
-                        <input type="number" id="yearsAtCompany" class="form-control" min="0" step="1" required>
+                        <label for="YearsAtCompany">Years at Company</label>
+                        <input type="number" id="YearsAtCompany" class="form-control" min="0" step="1" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="yearsSinceLastPromotion">Years Since Last Promotion</label>
-                        <input type="number" id="yearsSinceLastPromotion" class="form-control" min="0" step="1" required>
+                        <label for="YearsSinceLastPromotion">Years Since Last Promotion</label>
+                        <input type="number" id="YearsSinceLastPromotion" class="form-control" min="0" step="1" required>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="numCompaniesWorked">Number of Companies Worked</label>
-                        <input type="number" id="numCompaniesWorked" class="form-control" min="0" step="1" required>
+                        <label for="NumCompaniesWorked">Number of Companies Worked</label>
+                        <input type="number" id="NumCompaniesWorked" class="form-control" min="0" step="1" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="trainingTimesLastYear">Training Times Last Year</label>
-                        <select id="trainingTimesLastYear" class="form-control" required>
+                        <label for="TrainingTimesLastYear">Training Times Last Year</label>
+                        <select id="TrainingTimesLastYear" class="form-control" required>
                             <option value="">Select Training Times</option>
                             <option value="0">0</option>
                             <option value="1">1</option>
@@ -171,8 +171,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="businessTravel">Business Travel</label>
-                        <select id="businessTravel" class="form-control" required>
+                        <label for="BusinessTravel">Business Travel</label>
+                        <select id="BusinessTravel" class="form-control" required>
                             <option value="">Select Business Travel</option>
                             <option value="Travel_Rarely">Travel Rarely</option>
                             <option value="Travel_Frequently">Travel Frequently</option>
@@ -182,16 +182,16 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="distanceFromHome">Distance from Home</label>
-                        <input type="number" id="distanceFromHome" class="form-control" min="0" step="1" required>
+                        <label for="DistanceFromHome">Distance from Home</label>
+                        <input type="number" id="DistanceFromHome" class="form-control" min="0" step="1" required>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="environmentSatisfaction">Environment Satisfaction</label>
-                        <select id="environmentSatisfaction" class="form-control" required>
+                        <label for="EnvironmentSatisfaction">Environment Satisfaction</label>
+                        <select id="EnvironmentSatisfaction" class="form-control" required>
                             <option value="">Select Satisfaction</option>
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
@@ -202,8 +202,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="jobInvolvement">Job Involvement</label>
-                        <select id="jobInvolvement" class="form-control" required>
+                        <label for="JobInvolvement">Job Involvement</label>
+                        <select id="JobInvolvement" class="form-control" required>
                             <option value="">Select Involvement</option>
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
@@ -216,8 +216,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="jobSatisfaction">Job Satisfaction</label>
-                        <select id="jobSatisfaction" class="form-control" required>
+                        <label for="JobSatisfaction">Job Satisfaction</label>
+                        <select id="JobSatisfaction" class="form-control" required>
                             <option value="">Select Satisfaction</option>
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
@@ -228,8 +228,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="relationshipSatisfaction">Relationship Satisfaction</label>
-                        <select id="relationshipSatisfaction" class="form-control" required>
+                        <label for="RelationshipSatisfaction">Relationship Satisfaction</label>
+                        <select id="RelationshipSatisfaction" class="form-control" required>
                             <option value="">Select Satisfaction</option>
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
@@ -242,8 +242,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="workLifeBalance">Work-Life Balance</label>
-                        <select id="workLifeBalance" class="form-control" required>
+                        <label for="WorkLifeBalance">Work-Life Balance</label>
+                        <select id="WorkLifeBalance" class="form-control" required>
                             <option value="">Select Balance</option>
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
@@ -254,11 +254,11 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="overTime">OverTime</label>
-                        <select id="overTime" class="form-control" required>
+                        <label for="OverTime">OverTime</label>
+                        <select id="OverTime" class="form-control" required>
                             <option value="">Select OverTime</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
                         </select>
                     </div>
                 </div>
@@ -269,36 +269,36 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="dailyRate">Daily Rate</label>
-                        <input type="number" id="dailyRate" class="form-control" min="0" required>
+                        <label for="DailyRate">Daily Rate</label>
+                        <input type="number" id="DailyRate" class="form-control" min="0" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="hourlyRate">Hourly Rate</label>
-                        <input type="number" id="hourlyRate" class="form-control" min="0" required>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="monthlyRate">Monthly Rate</label>
-                        <input type="number" id="monthlyRate" class="form-control" min="0" required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="percentSalaryHike">Percent Salary Hike</label>
-                        <input type="number" id="percentSalaryHike" class="form-control" min="0" max="100" required>
+                        <label for="HourlyRate">Hourly Rate</label>
+                        <input type="number" id="HourlyRate" class="form-control" min="0" required>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="performanceRating">Performance Rating</label>
-                        <select id="performanceRating" class="form-control" required>
+                        <label for="MonthlyRate">Monthly Rate</label>
+                        <input type="number" id="MonthlyRate" class="form-control" min="0" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="PercentSalaryHike">Percent Salary Hike</label>
+                        <input type="number" id="PercentSalaryHike" class="form-control" min="0" max="100" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="PerformanceRating">Performance Rating</label>
+                        <select id="PerformanceRating" class="form-control" required>
                             <option value="">Select Rating</option>
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
@@ -309,8 +309,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="stockOptionLevel">Stock Option Level</label>
-                        <select id="stockOptionLevel" class="form-control" required>
+                        <label for="StockOptionLevel">Stock Option Level</label>
+                        <select id="StockOptionLevel" class="form-control" required>
                             <option value="">Select Level</option>
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
@@ -322,9 +322,9 @@
             </div>
         </form>
         <div class="text-center">
-            <button id="predictButton" class="btn btn-primary mt-4 pulse">Predict</button>
+            <button id="PredictButton" class="btn btn-primary mt-4 pulse">Predict</button>
         </div>
-        <div id="result" class="text-center"></div>
+        <div id="Result" class="text-center"></div>
     </div>
 
     <script src="javascriptt.js"></script>

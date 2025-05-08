@@ -1,10 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify 
 import logging
+from flask_cors import CORS
 #local imports
 from src.api.predict import predictor
-# from src.api.schemas import EmployeeData
+
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/predict', methods=['POST'])
 def predict():

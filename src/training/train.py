@@ -19,7 +19,7 @@ def train_model():
     df = load_data()
     X, y, preprocessor = preprocess_and_save_data(df)
     
-    with mlflow.start_run() as run:
+    with mlflow.start_run(run_name= 'Ensemble') as run:
         print(f"Run ID: {run.info.run_id}")
         # Log parameters in chunks
         mlflow.log_param("model_type", "StackingClassifier")
@@ -59,6 +59,7 @@ def train_model():
         }, "cross_val_results.json")
         
         print(f"Model trained. CV ROC AUC: {metrics['roc_auc']:.4f}")
+        mlflow.sklearn.save_model(model, str(Config.MODEL_DIR / 'model'))
         
     return model, metrics
 
