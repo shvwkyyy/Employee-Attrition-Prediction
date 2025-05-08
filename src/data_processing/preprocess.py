@@ -1,9 +1,11 @@
 import pandas as pd
 import joblib
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder
 from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
 from pathlib import Path
+from imblearn.pipeline import Pipeline  
+from imblearn.over_sampling import SMOTE
+from sklearn.decomposition import PCA
 import logging
 from src.config import Config
 
@@ -16,30 +18,44 @@ def load_data(file_path: str = None) -> pd.DataFrame:
     df = pd.read_csv(file_path)
     return df
 
+def drop_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """Drop specified columns from DataFrame"""
+    columns=['Over18','EmployeeCount','StandardHours','EmployeeNumber','MonthlyIncome','YearsInCurrentRole','YearsWithCurrManager']
+    df.drop(columns=columns,inplace=True)
+    return df
+
 def create_preprocessor():
     """Create preprocessing pipeline"""
+    categorical_transformer = Pipeline(steps=[
+        ('label', LabelEncoder(handle_unknown='ignore'))
+    ])
     numeric_transformer = Pipeline(steps=[
         ('scaler', StandardScaler())
     ])
     
-    categorical_transformer = Pipeline(steps=[
-        ('onehot', OneHotEncoder(handle_unknown='ignore'))
-    ])
-    
+
     preprocessor = ColumnTransformer(
         transformers=[
-            ('num', numeric_transformer, Config.NUMERIC_FEATURES),
-            ('cat', categorical_transformer, Config.CATEGORICAL_FEATURES)
+            ('cat', categorical_transformer, Config.CATEGORICAL_FEATURES),
+            ('num', numeric_transformer, Config.NUMERIC_FEATURES)
         ])
     
     return preprocessor
 
 def preprocess_and_save_data(df: pd.DataFrame, save: bool = True):
     """Preprocess data and optionally save the preprocessor"""
+    drop_columns(df)
     preprocessor = create_preprocessor()
     
     X = df.drop(Config.TARGET, axis=1)
     y = df[Config.TARGET].map({'Yes': 1, 'No': 0})
+    sharmot=Pipeline([
+    ('smote', SMOTE(random_state=42)),
+    ('pca', PCA(n_components=23)),
+    ])
+    X = sharmot.fit_resample(X)
+
+
     
     X_processed = preprocessor.fit_transform(X)
     

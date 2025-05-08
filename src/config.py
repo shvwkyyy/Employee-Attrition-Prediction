@@ -25,12 +25,13 @@ class Config:
     NUMERIC_FEATURES = [
         'Age', 'DailyRate', 'DistanceFromHome', 'Education', 
         'EnvironmentSatisfaction', 'HourlyRate', 'JobInvolvement', 
-        'JobLevel', 'JobSatisfaction', 'MonthlyIncome', 'MonthlyRate', 
+        'JobLevel', 'JobSatisfaction', 'MonthlyRate', 
         'NumCompaniesWorked', 'PercentSalaryHike', 'PerformanceRating', 
-        'RelationshipSatisfaction', 'StockOptionLevel', 
+        'RelationshipSatisfaction', 'StockOptionLevel',
         'TotalWorkingYears', 'TrainingTimesLastYear', 'WorkLifeBalance', 
         'YearsAtCompany', 'YearsInCurrentRole', 'YearsSinceLastPromotion', 
-        'YearsWithCurrManager'
+        'YearsWithCurrManager','BusinessTravel', 'Department', 'EducationField', 'Gender', 
+        'JobRole', 'MaritalStatus','OverTime'
     ]
     
     CATEGORICAL_FEATURES = [

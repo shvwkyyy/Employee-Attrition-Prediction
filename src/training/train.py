@@ -1,10 +1,10 @@
 import mlflow
 import mlflow.sklearn
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
 from src.config import Config
 from src.data_processing.preprocess import load_data, preprocess_and_save_data
 from src.training.evaluate import ModelEvaluator
+from sklearn.ensemble import StackingClassifier
+from sklearn.model_selection import  StratifiedKFold
 
 def train_model():
     """Train and evaluate model with MLflow tracking"""
@@ -19,23 +19,17 @@ def train_model():
     X, y, preprocessor = preprocess_and_save_data(df)
     
     # Split data
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, 
-        test_size=Config.TEST_SIZE, 
-        random_state=Config.RANDOM_STATE,
-        stratify=y
-    )
     
     with mlflow.start_run() as run:
         print(f"Run ID: {run.info.run_id}")
         mlflow.log_params(Config.MODEL_PARAMS)
         
-        model = RandomForestClassifier(**Config.MODEL_PARAMS)
-        model.fit(X_train, y_train)
-        
+        model = StackingClassifier(**Config.MODEL_PARAMS)
+        cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=42)
+
+        y_pred = cross_val_predict(model, X, y, cv=cv)        
         # Evaluate 
-        evaluator = ModelEvaluator(model, preprocessor)
-        metrics = evaluator.evaluate(X_test, y_test)
+        evaluator = ModelEvaluator.evaluate(model, preprocessor)
         
         # Log artifacts
         mlflow.sklearn.log_model(model, "model")
