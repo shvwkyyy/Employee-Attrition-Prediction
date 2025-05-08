@@ -14,29 +14,23 @@ logger = logging.getLogger(__name__)
 class ModelEvaluator:
     """Handles model evaluation and metric tracking"""
     
-    def __init__(self, model, preprocessor):
-        self.model = model
-        self.preprocessor = preprocessor
-    
-    def evaluate(self, X_test: pd.DataFrame, y_test: pd.Series) -> Dict[str, float]:
+    def evaluate(self, y: pd.DataFrame, y_pred: pd.Series) -> Dict[str, float]:
         """Run full evaluation suite"""
         try:
             # Generate predictions
-            y_pred = self.model.predict(X_test)
-            y_proba = self.model.predict_proba(X_test)[:, 1]
+
             
             # Calculate metrics
             metrics = {
-                'accuracy': accuracy_score(y_test, y_pred),
-                'precision': precision_score(y_test, y_pred),
-                'recall': recall_score(y_test, y_pred),
-                'f1': f1_score(y_test, y_pred),
-                'roc_auc': roc_auc_score(y_test, y_proba),
-                'confusion_matrix': confusion_matrix(y_test, y_pred).tolist()
+                'accuracy': accuracy_score(y, y_pred),
+                'precision': precision_score(y, y_pred),
+                'recall': recall_score(y, y_pred),
+                'f1': f1_score(y, y_pred),
+                'confusion_matrix': confusion_matrix(y, y_pred).tolist()
             }
             
             # Generate classification report
-            report = classification_report(y_test, y_pred, output_dict=True)
+            report = classification_report(y, y_pred, output_dict=True)
             
             # Log to MLflow
             if Config.TRACKING_ENABLED:

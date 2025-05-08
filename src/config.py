@@ -1,5 +1,8 @@
 from pathlib import Path
 import os
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from xgboost import XGBClassifier
 
 class Config:
     # Paths
@@ -13,12 +16,19 @@ class Config:
     MLFLOW_TRACKING_URI = "file://" + str(BASE_DIR / "mlruns")
     MLFLOW_EXPERIMENT_NAME = "employee_attrition"
     
+
+    #parameters
+    estimators = [
+    ('lr',LogisticRegression(C= 1, penalty= 'l1',class_weight='balanced' ,solver= 'liblinear',random_state=42)),
+    ('xg', XGBClassifier(colsample_bytree= 1.0, learning_rate= 0.01, max_depth= 3, n_estimators= 100, subsample= 0.8, random_state=42)),
+    ('ds', DecisionTreeClassifier(criterion= 'gini', max_depth= 5, min_samples_leaf= 5, min_samples_split= 5,random_state=42))
+    ]
+    final_estimator = LogisticRegression(C= 1, penalty= 'l1',class_weight='balanced' ,solver= 'liblinear',random_state=42)
+
     # Model Parameters
     MODEL_PARAMS = {
-        "n_estimators": 100,
-        "max_depth": 8,
-        "random_state": 42,
-        "class_weight": "balanced"
+        'estimators': estimators,
+        'final_estimator': final_estimator,
     }
     
     # Features
