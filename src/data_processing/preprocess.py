@@ -1,6 +1,6 @@
 import pandas as pd
 import joblib
-from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from pathlib import Path
 from imblearn.pipeline import Pipeline  
@@ -8,7 +8,6 @@ from imblearn.over_sampling import SMOTE
 from sklearn.decomposition import PCA
 import logging
 from src.config import Config
-
 
 logger = logging.getLogger(__name__)
 
@@ -20,49 +19,73 @@ def load_data(file_path: str = None) -> pd.DataFrame:
 
 def drop_columns(df: pd.DataFrame) -> pd.DataFrame:
     """Drop specified columns from DataFrame"""
-    columns=['Over18','EmployeeCount','StandardHours','EmployeeNumber','MonthlyIncome','YearsInCurrentRole','YearsWithCurrManager']
-    df.drop(columns=columns,inplace=True)
-    return df
+    return df.drop(columns=Config.DELETED_FEATURES)
 
 def create_preprocessor():
     """Create preprocessing pipeline"""
-    categorical_transformer = Pipeline(steps=[
-        ('label', LabelEncoder(handle_unknown='ignore'))
-    ])
     numeric_transformer = Pipeline(steps=[
         ('scaler', StandardScaler())
     ])
     
-
+    # Use OneHotEncoder instead of LabelEncoder for categorical features
+    categorical_transformer = Pipeline(steps=[
+        ('onehot', OneHotEncoder(handle_unknown='ignore'))
+    ])
+    
     preprocessor = ColumnTransformer(
         transformers=[
-            ('cat', categorical_transformer, Config.CATEGORICAL_FEATURES),
-            ('num', numeric_transformer, Config.NUMERIC_FEATURES)
+            ('num', numeric_transformer, Config.NUMERIC_FEATURES),
+            ('cat', categorical_transformer, Config.CATEGORICAL_FEATURES)
         ])
     
     return preprocessor
 
 def preprocess_and_save_data(df: pd.DataFrame, save: bool = True):
     """Preprocess data and optionally save the preprocessor"""
-    drop_columns(df)
-    preprocessor = create_preprocessor()
+    try:
+        # 1. Drop columns
+        df = drop_columns(df)
+        
+        # 2. Separate features and target
+        X = df.drop(Config.TARGET, axis=1)
+        y = df[Config.TARGET].map({'Yes': 1, 'No': 0})
+        
+        # 3. Create and apply preprocessor
+        preprocessor = create_preprocessor()
+        X_processed = preprocessor.fit_transform(X)
+        
+        # 4. Apply SMOTE first (before PCA) to balance classes
+        smote = SMOTE(random_state=Config.RANDOM_STATE)
+        X_resampled, y_resampled = smote.fit_resample(X_processed, y)
+        
+        # 5. Apply PCA to the resampled data
+        pca = PCA(n_components=23)
+        X_final = pca.fit_transform(X_resampled)
+        
+        if save:
+            # Save processors
+            joblib.dump({
+                'preprocessor': preprocessor,
+                'pca': pca,
+                'smote': smote
+            }, Config.MODEL_DIR / 'full_processor.joblib')
+            
+            # Save processed data
+            pd.DataFrame(X_final).to_csv(
+                Config.PROCESSED_DIR / 'processed_features.csv', 
+                index=False
+            )
+            pd.Series(y_resampled).to_csv(
+                Config.PROCESSED_DIR / 'target.csv', 
+                index=False
+            )
+        
+        return X_final, y_resampled, {
+            'preprocessor': preprocessor,
+            'pca': pca,
+            'smote': smote
+        }
     
-    X = df.drop(Config.TARGET, axis=1)
-    y = df[Config.TARGET].map({'Yes': 1, 'No': 0})
-    sharmot=Pipeline([
-    ('smote', SMOTE(random_state=42)),
-    ('pca', PCA(n_components=23)),
-    ])
-    X = sharmot.fit_resample(X)
-
-
-    
-    X_processed = preprocessor.fit_transform(X)
-    
-    if save:
-        joblib.dump(preprocessor, Config.MODEL_DIR / 'preprocessor.joblib')
-        pd.DataFrame(X_processed).to_csv(
-            Config.PROCESSED_DIR / 'processed_features.csv', index=False)
-        y.to_csv(Config.PROCESSED_DIR / 'target.csv', index=False)
-    
-    return X_processed, y, preprocessor
+    except Exception as e:
+        logger.error(f"Preprocessing failed: {str(e)}")
+        raise

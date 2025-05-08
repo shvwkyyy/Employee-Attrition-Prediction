@@ -28,7 +28,7 @@ class Config:
     # Model Parameters
     MODEL_PARAMS = {
         'estimators': estimators,
-        'final_estimator': final_estimator,
+        'final_estimator': final_estimator
     }
     
     # Features
@@ -39,9 +39,12 @@ class Config:
         'NumCompaniesWorked', 'PercentSalaryHike', 'PerformanceRating', 
         'RelationshipSatisfaction', 'StockOptionLevel',
         'TotalWorkingYears', 'TrainingTimesLastYear', 'WorkLifeBalance', 
-        'YearsAtCompany', 'YearsInCurrentRole', 'YearsSinceLastPromotion', 
-        'YearsWithCurrManager','BusinessTravel', 'Department', 'EducationField', 'Gender', 
-        'JobRole', 'MaritalStatus','OverTime'
+        'YearsAtCompany', 'YearsSinceLastPromotion'
+    ]
+    DELETED_FEATURES =[
+        'Over18', 'EmployeeCount', 'StandardHours',
+        'EmployeeNumber', 'MonthlyIncome',
+        'YearsInCurrentRole', 'YearsWithCurrManager'
     ]
     
     CATEGORICAL_FEATURES = [
