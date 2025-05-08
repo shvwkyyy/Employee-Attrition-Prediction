@@ -6,7 +6,7 @@ from sklearn.pipeline import Pipeline
 from pathlib import Path
 import logging
 from src.config import Config
-from src.data_processing.data_validation import DataValidator  # Updated import
+
 
 logger = logging.getLogger(__name__)
 
@@ -14,7 +14,6 @@ def load_data(file_path: str = None) -> pd.DataFrame:
     """Load and validate raw data"""
     file_path = file_path or Config.RAW_DATA_PATH
     df = pd.read_csv(file_path)
-    DataValidator().validate_data(df)  # Updated validation call
     return df
 
 def create_preprocessor():

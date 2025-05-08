@@ -4,8 +4,8 @@ import logging
 from pathlib import Path
 from typing import Dict, Any
 from pydantic import ValidationError
-from config import Config
-from api.schemas import EmployeeData
+from src.config import Config
+from src.api.schemas import EmployeeData
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +40,7 @@ class Predictor:
         try:
             # Validate and convert to DataFrame
             employee = self.validate_input(input_data)
-            input_df = pd.DataFrame([employee.dict()])
+            input_df = pd.DataFrame([employee.model_dump()])
             
             # Preprocess and predict
             processed_data = self.preprocessor.transform(input_df)

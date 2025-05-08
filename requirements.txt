@@ -13,9 +13,6 @@ flask==2.3.2
 flask-cors==3.0.10  # For cross-origin requests
 python-dotenv==1.0.0  # Environment variables
 
-# Data Visualization (Optional for notebooks)
-matplotlib==3.7.1
-seaborn==0.12.2
 
 # Testing & Quality
 pytest==7.3.1

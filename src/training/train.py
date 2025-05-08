@@ -2,14 +2,9 @@ import mlflow
 import mlflow.sklearn
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import (
-    accuracy_score, precision_score, recall_score, f1_score, 
-    roc_auc_score, classification_report
-)
-import joblib
-from pathlib import Path
 from src.config import Config
 from src.data_processing.preprocess import load_data, preprocess_and_save_data
+from src.training.evaluate import ModelEvaluator
 
 def train_model():
     """Train and evaluate model with MLflow tracking"""
@@ -38,22 +33,9 @@ def train_model():
         model = RandomForestClassifier(**Config.MODEL_PARAMS)
         model.fit(X_train, y_train)
         
-        # Evaluate
-        y_pred = model.predict(X_test)
-        y_proba = model.predict_proba(X_test)[:, 1]
-        
-        # Calculate metrics
-        metrics = {
-            'accuracy': accuracy_score(y_test, y_pred),
-            'precision': precision_score(y_test, y_pred),
-            'recall': recall_score(y_test, y_pred),
-            'f1': f1_score(y_test, y_pred),
-            'roc_auc': roc_auc_score(y_test, y_proba)
-        }
-        
-        # Log parameters and metrics
-        mlflow.log_params(model.get_params())
-        mlflow.log_metrics(metrics)
+        # Evaluate 
+        evaluator = ModelEvaluator(model, preprocessor)
+        metrics = evaluator.evaluate(X_test, y_test)
         
         # Log artifacts
         mlflow.sklearn.log_model(model, "model")
@@ -61,8 +43,6 @@ def train_model():
         
         # Save model to production
         mlflow.sklearn.save_model(model, str(Config.MODEL_DIR / 'model'))
-        
-        print(f"Model trained and saved. ROC AUC: {metrics['roc_auc']:.4f}")
         
     return model, metrics
 

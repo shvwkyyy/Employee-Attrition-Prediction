@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify
 import logging
 #local imports
-from .predict import predictor
-from .schemas import EmployeeData
+from src.api.predict import predictor
+# from src.api.schemas import EmployeeData
 
 app = Flask(__name__)
 

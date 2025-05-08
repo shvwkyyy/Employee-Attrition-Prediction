@@ -24,14 +24,19 @@ class Config:
     # Features
     NUMERIC_FEATURES = [
         'Age', 'DailyRate', 'DistanceFromHome', 'Education', 
-        'EnvironmentSatisfaction', 'MonthlyIncome'
+        'EnvironmentSatisfaction', 'HourlyRate', 'JobInvolvement', 
+        'JobLevel', 'JobSatisfaction', 'MonthlyIncome', 'MonthlyRate', 
+        'NumCompaniesWorked', 'PercentSalaryHike', 'PerformanceRating', 
+        'RelationshipSatisfaction', 'StockOptionLevel', 
+        'TotalWorkingYears', 'TrainingTimesLastYear', 'WorkLifeBalance', 
+        'YearsAtCompany', 'YearsInCurrentRole', 'YearsSinceLastPromotion', 
+        'YearsWithCurrManager'
     ]
     
     CATEGORICAL_FEATURES = [
-        'BusinessTravel', 'Department', 'Gender', 
-        'JobRole', 'OverTime'
+        'BusinessTravel', 'Department', 'EducationField', 'Gender', 
+        'JobRole', 'MaritalStatus', 'OverTime'
     ]
-    
     TARGET = 'Attrition'
     
     # Validation
