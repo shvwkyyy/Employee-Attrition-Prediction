@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Attrition Prediction</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href='styles.css'>
+
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Employee Attrition Prediction</h1>
+        <form id="predictionForm">
+            <!-- Personal Information -->
+            <h3>Personal Information</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" class="form-control" required>
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" class="form-control" min="18" max="65" step="1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="maritalStatus">Marital Status</label>
+                        <select id="maritalStatus" class="form-control" required>
+                            <option value="">Select Marital Status</option>
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                            <option value="Divorced">Divorced</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="education">Education</label>
+                        <select id="education" class="form-control" required>
+                            <option value="">Select Education</option>
+                            <option value="Below College">Below College</option>
+                            <option value="College">College</option>
+                            <option value="Bachelor">Bachelor</option>
+                            <option value="Master">Master</option>
+                            <option value="Doctor">Doctor</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="educationField">Education Field</label>
+                        <select id="educationField" class="form-control" required>
+                            <option value="">Select Education Field</option>
+                            <option value="Life Sciences">Life Sciences</option>
+                            <option value="Other">Other</option>
+                            <option value="Medical">Medical</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Technical Degree">Technical Degree</option>
+                            <option value="Human Resources">Human Resources</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Details -->
+            <h3>Job Details</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <select id="department" class="form-control" required>
+                            <option value="">Select Department</option>
+                            <option value="Sales">Sales</option>
+                            <option value="Research & Development">Research & Development</option>
+                            <option value="Human Resources">Human Resources</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="jobRole">Job Role</label>
+                        <select id="jobRole" class="form-control" required>
+                            <option value="">Select Job Role</option>
+                            <option value="Sales Executive">Sales Executive</option>
+                            <option value="Research Scientist">Research Scientist</option>
+                            <option value="Laboratory Technician">Laboratory Technician</option>
+                            <option value="Manufacturing Director">Manufacturing Director</option>
+                            <option value="Healthcare Representative">Healthcare Representative</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Sales Representative">Sales Representative</option>
+                            <option value="Research Director">Research Director</option>
+                            <option value="Human Resources">Human Resources</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="jobLevel">Job Level</label>
+                        <select id="jobLevel" class="form-control" required>
+                            <option value="">Select Job Level</option>
+                            <option value="junior">Junior</option>
+                            <option value="mid_level">Mid Level</option>
+                            <option value="senior">Senior</option>
+                            <option value="manager">Manager</option>
+                            <option value="executive">Executive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="totalWorkingYears">Total Working Years</label>
+                        <input type="number" id="totalWorkingYears" class="form-control" min="0" max="65" step="1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="yearsAtCompany">Years at Company</label>
+                        <input type="number" id="yearsAtCompany" class="form-control" min="0" step="1" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="yearsInCurrentRole">Years in Current Role</label>
+                        <input type="number" id="yearsInCurrentRole" class="form-control" min="0" step="1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="yearsSinceLastPromotion">Years Since Last Promotion</label>
+                        <input type="number" id="yearsSinceLastPromotion" class="form-control" min="0" step="1" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="yearsWithCurrManager">Years with Current Manager</label>
+                        <input type="number" id="yearsWithCurrManager" class="form-control" min="0" step="1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="numCompaniesWorked">Number of Companies Worked</label>
+                        <input type="number" id="numCompaniesWorked" class="form-control" min="0" step="1" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="trainingTimesLastYear">Training Times Last Year</label>
+                        <select id="trainingTimesLastYear" class="form-control" required>
+                            <option value="">Select Training Times</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Work Environment -->
+            <h3>Work Environment</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="businessTravel">Business Travel</label>
+                        <select id="businessTravel" class="form-control" required>
+                            <option value="">Select Business Travel</option>
+                            <option value="Travel_Rarely">Travel Rarely</option>
+                            <option value="Travel_Frequently">Travel Frequently</option>
+                            <option value="Non-Travel">Non-Travel</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="distanceFromHome">Distance from Home</label>
+                        <input type="number" id="distanceFromHome" class="form-control" min="0" step="1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="environmentSatisfaction">Environment Satisfaction</label>
+                        <select id="environmentSatisfaction" class="form-control" required>
+                            <option value="">Select Satisfaction</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="very high">Very High</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="jobInvolvement">Job Involvement</label>
+                        <select id="jobInvolvement" class="form-control" required>
+                            <option value="">Select Involvement</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="very high">Very High</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="jobSatisfaction">Job Satisfaction</label>
+                        <select id="jobSatisfaction" class="form-control" required>
+                            <option value="">Select Satisfaction</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="very high">Very High</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="relationshipSatisfaction">Relationship Satisfaction</label>
+                        <select id="relationshipSatisfaction" class="form-control" required>
+                            <option value="">Select Satisfaction</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="very high">Very High</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="workLifeBalance">Work-Life Balance</label>
+                        <select id="workLifeBalance" class="form-control" required>
+                            <option value="">Select Balance</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="very high">Very High</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="overTime">OverTime</label>
+                        <select id="overTime" class="form-control" required>
+                            <option value="">Select OverTime</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compensation and Performance -->
+            <h3>Compensation and Performance</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="dailyRate">Daily Rate</label>
+                        <input type="number" id="dailyRate" class="form-control" min="0" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="hourlyRate">Hourly Rate</label>
+                        <input type="number" id="hourlyRate" class="form-control" min="0" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="monthlyRate">Monthly Rate</label>
+                        <input type="number" id="monthlyRate" class="form-control" min="0" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="percentSalaryHike">Percent Salary Hike</label>
+                        <input type="number" id="percentSalaryHike" class="form-control" min="0" max="100" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="performanceRating">Performance Rating</label>
+                        <select id="performanceRating" class="form-control" required>
+                            <option value="">Select Rating</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="very high">Very High</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="stockOptionLevel">Stock Option Level</label>
+                        <select id="stockOptionLevel" class="form-control" required>
+                            <option value="">Select Level</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="very high">Very High</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="text-center">
+            <button id="predictButton" class="btn btn-primary mt-4 pulse">Predict</button>
+        </div>
+        <div id="result" class="text-center"></div>
+    </div>
+
+    <script src="javascriptt.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
