@@ -15,17 +15,17 @@ class Config:
     TRACKING_ENABLED = True
     MLFLOW_TRACKING_URI = "file://" + str(BASE_DIR / "mlruns")
     MLFLOW_EXPERIMENT_NAME = "employee_attrition"
+    MLFLOW_REGISTERED_MODEL_NAME = "stacking-classifier"  # ✅ اسم الموديل داخل Model Registry
     
-
-    #parameters
-    estimators = [
-    ('lr',LogisticRegression(C= 1, penalty= 'l1',class_weight='balanced' ,solver= 'liblinear',random_state=42)),
-    ('xg', XGBClassifier(colsample_bytree= 1.0, learning_rate= 0.01, max_depth= 3, n_estimators= 100, subsample= 0.8, random_state=42)),
-    ('ds', DecisionTreeClassifier(criterion= 'gini', max_depth= 5, min_samples_leaf= 5, min_samples_split= 5,random_state=42))
-    ]
-    final_estimator = LogisticRegression(C= 1, penalty= 'l1',class_weight='balanced' ,solver= 'liblinear',random_state=42)
-
     # Model Parameters
+    estimators = [
+        ('lr', LogisticRegression(C=1, penalty='l1', class_weight='balanced', solver='liblinear', random_state=42)),
+        ('xg', XGBClassifier(colsample_bytree=1.0, learning_rate=0.01, max_depth=3, n_estimators=100, subsample=0.8, random_state=42)),
+        ('ds', DecisionTreeClassifier(criterion='gini', max_depth=5, min_samples_leaf=5, min_samples_split=5, random_state=42))
+    ]
+    
+    final_estimator = LogisticRegression(C=1, penalty='l1', class_weight='balanced', solver='liblinear', random_state=42)
+    
     MODEL_PARAMS = {
         'estimators': estimators,
         'final_estimator': final_estimator
@@ -41,7 +41,8 @@ class Config:
         'TotalWorkingYears', 'TrainingTimesLastYear', 'WorkLifeBalance', 
         'YearsAtCompany', 'YearsSinceLastPromotion'
     ]
-    DELETED_FEATURES =[
+    
+    DELETED_FEATURES = [
         'Over18', 'EmployeeCount', 'StandardHours',
         'EmployeeNumber', 'MonthlyIncome',
         'YearsInCurrentRole', 'YearsWithCurrManager'
@@ -51,6 +52,7 @@ class Config:
         'BusinessTravel', 'Department', 'EducationField', 'Gender', 
         'JobRole', 'MaritalStatus', 'OverTime'
     ]
+    
     TARGET = 'Attrition'
     
     # Validation
