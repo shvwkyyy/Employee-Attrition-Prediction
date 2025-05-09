@@ -6,6 +6,17 @@ from sklearn.model_selection import cross_val_predict, StratifiedKFold
 from src.config import Config
 from src.data_processing.preprocess import load_data, preprocess_and_save_data
 from src.training.evaluate import ModelEvaluator
+# Add to your imports
+from fastapi import FastAPI, HTTPException
+import uvicorn
+from pydantic import BaseModel
+import numpy as np
+
+# Add to config.py (or ensure these exist)
+class Config:
+    API_PORT = 8000
+    API_HOST = "0.0.0.0"
+    MODEL_ARTIFACT_PATH = "mlruns/0/<RUN_ID>/artifacts/model"  # Replace <RUN_ID>
 
 def train_model():
     """Train and evaluate model with cross-validation and MLflow tracking"""

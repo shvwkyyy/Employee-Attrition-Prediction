@@ -1,12 +1,15 @@
-from flask import Flask, request, jsonify 
-import logging
+from flask import Flask, request, jsonify ,send_from_directory
 from flask_cors import CORS
 #local imports
 from src.api.predict import predictor
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='src/static')
 CORS(app)
+
+@app.route('/')
+def home():
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -23,13 +26,9 @@ def predict():
             'message': str(e)
         }), 503
 
-@app.route('/health', methods=['GET'])
-def health_check():
-    """Health check endpoint"""
-    status = {
-        'ready': predictor.model is not None and predictor.preprocessor is not None
-    }
-    return jsonify(status), 200 if status['ready'] else 503
+@app.route('/<path:filename>')
+def serve_static(filename):
+    return send_from_directory(app.static_folder, filename)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
